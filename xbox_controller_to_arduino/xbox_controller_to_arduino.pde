@@ -36,7 +36,7 @@ public void getUserInput() {
 void draw() {
   getUserInput();
   arduino.analogWrite(leftAileron, (int)roll);
-  arduino.analogWrite(rightAileron, -(int)roll);
+  arduino.analogWrite(rightAileron, ((int)roll-180));
   arduino.analogWrite(elevator, (int)pitch);
   arduino.analogWrite(motor, (int)throttle);
 }
