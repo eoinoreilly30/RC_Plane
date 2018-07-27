@@ -1,0 +1,2 @@
+Test for plane contrroller
+servoPos	I move the servo	3	SLIDER	x	0	1.0	0.0
