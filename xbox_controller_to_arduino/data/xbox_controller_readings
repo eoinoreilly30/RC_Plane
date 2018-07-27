@@ -1,0 +1,4 @@
+RC Plane Controller
+roll	Rolls the plane left or right	3	SLIDER	x	0	1.0	0.0
+pitch	Pitches the plane up or down	3	SLIDER	y	0	1.0	0.0
+throttle	Controls the motor speed	3	SLIDER	rz	0	1.0	0.0
