@@ -9,8 +9,7 @@ ControlDevice controlDevice;
 ControlIO controlIO;
 Arduino arduino;
 float roll, pitch, throttle;
-int leftAileron = 3;
-int rightAileron = 4;
+int aileron = 4;
 int elevator = 5;
 int motor = 6;
 
@@ -35,8 +34,7 @@ public void getUserInput() {
 
 void draw() {
   getUserInput();
-  arduino.analogWrite(leftAileron, (int)roll);
-  arduino.analogWrite(rightAileron, (180-(int)roll));
+  arduino.analogWrite(aileron, (int)roll);
   arduino.analogWrite(elevator, (180-(int)pitch));
   arduino.analogWrite(motor, (int)throttle);
 }

@@ -13,25 +13,24 @@ RF24 radio(7, 8); // CNS, CE
 const byte addresses[][6] = {"00001", "00002"};
 
 struct dataStruct{
-  int leftAileron, rightAileron, elevator, motor;
+  int aileron, elevator, motor;
 }dataRx;
 
 Servo motor;
-Servo leftAileron;
-Servo rightAileron;
+Servo aileron;
 Servo elevator;
 
 void setup() {
+  pinMode(10, OUTPUT);
+  
   motor.attach(MOTOR_PIN);
 
   motor.writeMicroseconds(MAX_SIGNAL);
   delay(1000);
   motor.writeMicroseconds(MIN_SIGNAL);
   
-  leftAileron.attach(3);
-  rightAileron.attach(5);
+  aileron.attach(3);
   elevator.attach(6);
-  
   
   radio.begin();
   radio.setDataRate(RF24_2MBPS);
@@ -41,6 +40,14 @@ void setup() {
   radio.openReadingPipe(1, addresses[1]); // 00001
 
   radio.startListening();
+
+  digitalWrite(10, HIGH);
+  delay(500);
+  digitalWrite(10, LOW);
+  delay(500);
+  digitalWrite(10, HIGH);
+  delay(500);
+  digitalWrite(10, LOW);
 }
 
 void loop() {
@@ -52,8 +59,7 @@ void loop() {
       radio.read(&dataRx, sizeof(dataRx));
     }
     
-    leftAileron.write(dataRx.leftAileron);
-    rightAileron.write(dataRx.rightAileron);
+    aileron.write(dataRx.aileron);
     elevator.write(dataRx.elevator);
     motor.writeMicroseconds(dataRx.motor);
   }

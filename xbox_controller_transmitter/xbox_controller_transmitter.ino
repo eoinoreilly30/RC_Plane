@@ -4,8 +4,7 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 
-int leftAileron = 3;
-int rightAileron = 4;
+int aileron = 4;
 int elevator = 5;
 int motor = 6;
 
@@ -14,11 +13,13 @@ RF24 radio(7, 8); // CNS, CE
 const byte addresses[][6] = {"00001", "00002"};
 
 struct dataStruct{
-  int leftAileron, rightAileron, elevator, motor;
+  int aileron, elevator, motor;
 }data;
 
 void setup()
 {
+  Serial.begin(9600);
+  
   Firmata.setFirmwareVersion(0, 1);
   Firmata.attach(ANALOG_MESSAGE, analogWriteCallback); // Call this function when analog writes are received
   Firmata.begin(57600);
@@ -41,12 +42,8 @@ void loop()
 // Called whenever Arduino receives an analog message through Firmata
 void analogWriteCallback(byte pin, int value)
 {
-  if(pin == leftAileron) {
-    data.leftAileron = value;
-  }
-
-  else if(pin == rightAileron) {
-    data.rightAileron = value;
+  if(pin == aileron) {
+    data.aileron = value;
   }
 
   else if(pin == elevator) {
@@ -62,6 +59,8 @@ void analogWriteCallback(byte pin, int value)
      pinMode(pin,OUTPUT);
      analogWrite(pin, value);
   }
+
+  Serial.println(value);
 
   radio.write(&data, sizeof(data));
 }
